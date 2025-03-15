@@ -25,6 +25,7 @@
   "homepage": "https://github.com/celestecastro06/Node.js#readme",
   "dependencies": {
     "express": "^4.21.2",
+    "morgan": "^1.10.0",
     "nodemon": "^3.1.9"
   }
 }

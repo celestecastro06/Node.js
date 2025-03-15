@@ -12,8 +12,8 @@ PUT - modificar recursos
 DELETE - borrar un recurso
 */
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/",(req,res, next) => {
     return res.status(200).send("Bienvenido al Pokedex");

@@ -10,7 +10,7 @@ const user = require('./routes/user');
 const auth = require('./middleware/auth');
 const notFound = require('./middleware/notFound');
 const index = require('./middleware/index');
-const cors = require('./middleware/cors');
+const cors = require('cors');
 
 /* 
 GET - obtener recursos
@@ -20,7 +20,11 @@ PUT - modificar recursos
 DELETE - borrar un recurso
 */
 
-app.use(cors);
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));  
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

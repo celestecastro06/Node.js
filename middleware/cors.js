@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header(
-        "Acces-Control-Allow-Headers-",
+        "Acces-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     );
     if(req.method === 'OPTIONS') {

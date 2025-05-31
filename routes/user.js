@@ -3,21 +3,28 @@ const jwt = require('jsonwebtoken');
 const user = express.Router();
 const db = require('../config/database');
 
-user.post("/sinin", async (req, res, next) => {
-    const {user_name, user_mail, user_password} = req.body
-
+user.post("/signin", async (req, res, next) => {
+    const { user_name, user_mail, user_password } = req.body;
+  
     if (user_name && user_mail && user_password) {
-    let query = "INSERT INTO user (user_id, user_name, user_mail, user_password)"; 
-    query += `VALUES ('${user_name}, '${user_mail}, '${user_password})`;
-    const rows = await db.query(query);
-        if(rows.affectedRows == 1) {
-            return res.status(201).json({code: 201, message: "Usuario registrado correctamente"});
+      try {
+        const query = `INSERT INTO user (user_name, user_mail, user_password) VALUES ('${user_name}', '${user_mail}', '${user_password}')`;
+        const result = await db.query(query);
+  
+        if (result.affectedRows === 1) {
+          return res.status(201).json({ code: 201, message: "Usuario registrado correctamente" });
+        } else {
+          return res.status(500).json({ code: 500, message: "No se pudo insertar el usuario" });
         }
-        return res.status(500).json({code:500, message: "Ha ocurrido un error."});
+      } catch (err) {
+        console.error("Error SQL:", err); // ← Aquí se mostrará el error real
+        return res.status(500).json({ code: 500, message: "Error del servidor", error: err.message });
+      }
     }
-
-    return res.status(500).json({code:500, message: "Campos incompletos."});
-});
+  
+    return res.status(400).json({ code: 400, message: "Campos incompletos" });
+  });
+  
 
 user.post("/login", async (req, res, next) => {
     const {user_mail, user_password} = req.body
@@ -33,7 +40,7 @@ user.post("/login", async (req, res, next) => {
             return res.status(200).json({code: 200, message: token });
         }
         else {
-            return res.status(200).json({code: 200, message: "Usuario y/o consraseña incorrectos." });
+            return res.status(200).json({code: 401, message: "Usuario y/o consraseña incorrectos." });
         }
     }
 

@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/celestecastro06/Node.js#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
